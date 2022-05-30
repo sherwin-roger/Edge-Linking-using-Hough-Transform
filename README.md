@@ -1,74 +1,85 @@
-# Edge-Linking-using-Hough-Transform
+# Edge-Detection
 ## Aim:
-To write a Python program to detect the lines using Hough Transform.
+
+To perform edge detection using Sobel, Laplacian, and Canny edge detectors.
 
 ## Software Required:
 Anaconda - Python 3.7
 
 ## Algorithm:
 ### Step1:
-<br>
+Import the required packages.
 
 ### Step2:
-<br>
+Read the image and cconvert into gray image.
 
 ### Step3:
-<br>
+Remove the noise of the image using gaussian operator.
 
 ### Step4:
-<br>
+Find the sobel edge,laplacian edge,canny edge using the built in modules available in opencv.
 
 ### Step5:
-<br>
-
-
+Plot the edged image using matplotlib.
+ 
 ## Program:
-```Python
 
-# Read image and convert it to grayscale image
+``` Python
+# Developed By   : SHERWIN ROGER R.D
+# Register Number: 212220230046
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+image1=cv2.imread ('images.jpg') 
+gray = cv2.cvtColor(image1,cv2.COLOR_BGR2GRAY)
 
+plt.title('GRAY IMAGE')
+plt.imshow(gray,cmap = 'gray')
 
+img = cv2.GaussianBlur(gray,(3,3),0)
+sobelx = cv2.Sobel(gray,cv2.CV_64F,1,0,ksize=5)
+sobely = cv2.Sobel(gray,cv2.CV_64F,0,1,ksize=5)
+sobelxy =cv2.Sobel(gray,cv2.CV_64F,1,1,ksize=5)
+plt.figure(1)
+plt.subplot(2,2,1)
+plt.imshow(gray,cmap = 'gray')
+plt.title('Original'), plt.xticks([]), plt.yticks([])
 
-# Find the edges in the image using canny detector and display
+plt.subplot(2,2,2)
+plt.imshow(sobelx,cmap='gray')
+plt.title('sobelx')
+plt.xticks([]), plt.yticks([])
 
+plt.subplot(2,2,3)
+plt.imshow(sobely,cmap='gray')
+plt.title('sobely')
+plt.xticks([]), plt.yticks([])
 
+plt.subplot(2,2,4)
+plt.imshow(sobelxy,cmap='gray')
+plt.title('sobelxy')
+plt.xticks([]), plt.yticks([])
+plt.show()
+# cv2.waitKey(0)
+laplacian = cv2.Laplacian(gray,cv2.CV_64F)
+plt.imshow(laplacian,cmap='gray')
+plt.title('laplacian')
+plt.show()
 
-# Detect points that form a line using HoughLinesP
-
-
-
-# Draw lines on the image
-
-
-
-# Display the result
-
-
-
-
+canny_edges = cv2.Canny(gray, 120, 150)
+plt.imshow(canny_edges,cmap='gray')
+plt.title('canny_edges')
+plt.show()
 ```
-## Output
+## Output:
+### SOBEL EDGE DETECTOR
+![O1](https://user-images.githubusercontent.com/75235747/168643877-2d3b2e4c-c586-4f92-b313-5926f3aa4d73.JPG)
 
-### Input image and grayscale image
-<br>
-<br>
-<br>
-<br>
+### LAPLACIAN EDGE DETECTOR
+![O2](https://user-images.githubusercontent.com/75235747/168643968-b99b4833-5ebb-45b2-a253-553ba2a7982d.JPG)
 
-### Canny Edge detector output
-<br>
-<br>
-<br>
-<br>
-
-
-### Display the result of Hough transform
-<br>
-<br>
-<br>
-<br>
-
-
+### CANNY EDGE DETECTOR
+![O3](https://user-images.githubusercontent.com/75235747/168643999-090609d7-2a33-4e5d-9e95-fd9b1c4b9a52.JPG)
 
 ## Result:
-Thus the program is written with python and OpenCV to detect lines using Hough transform. 
+Thus the edges are detected using Sobel, Laplacian, and Canny edge detectors.
