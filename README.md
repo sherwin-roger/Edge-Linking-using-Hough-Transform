@@ -1,85 +1,83 @@
-# Edge-Detection
+# Edge-Linking-using-Hough-Transform
 ## Aim:
-
-To perform edge detection using Sobel, Laplacian, and Canny edge detectors.
+To write a Python program to detect the lines using Hough Transform.
 
 ## Software Required:
 Anaconda - Python 3.7
 
 ## Algorithm:
 ### Step1:
-Import the required packages.
-
+Import all the necessary modules for the program.
 ### Step2:
-Read the image and cconvert into gray image.
-
+Load a image using imread() from cv2 module.
 ### Step3:
-Remove the noise of the image using gaussian operator.
-
+Convert the image to grayscale.
 ### Step4:
-Find the sobel edge,laplacian edge,canny edge using the built in modules available in opencv.
-
+Using Canny operator from cv2,detect the edges of the image.
 ### Step5:
-Plot the edged image using matplotlib.
- 
-## Program:
+Using the HoughLinesP(),detect line co-ordinates for every points in the images.Using For loop,draw the lines on the found co-ordinates.Display the image.
 
-``` Python
-# Developed By   : SHERWIN ROGER R.D
-# Register Number: 212220230046
+## Program:
+```Python
+
+# Read image and convert it to grayscale image
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-image1=cv2.imread ('images.jpg') 
-gray = cv2.cvtColor(image1,cv2.COLOR_BGR2GRAY)
+from cv2 import cvtColor
+image=cv2.imread("OIP.jpg")
+cv2.imshow("ORIGINAL",image)
 
-plt.title('GRAY IMAGE')
-plt.imshow(gray,cmap = 'gray')
+gray=cv2.cvtColor(image,cv2.COLOR_RGB2GRAY)
 
-img = cv2.GaussianBlur(gray,(3,3),0)
-sobelx = cv2.Sobel(gray,cv2.CV_64F,1,0,ksize=5)
-sobely = cv2.Sobel(gray,cv2.CV_64F,0,1,ksize=5)
-sobelxy =cv2.Sobel(gray,cv2.CV_64F,1,1,ksize=5)
 plt.figure(1)
-plt.subplot(2,2,1)
-plt.imshow(gray,cmap = 'gray')
-plt.title('Original'), plt.xticks([]), plt.yticks([])
+plt.subplot(1,2,1)
+plt.imshow(gray)
+plt.title('Original')
+plt.axis('off')
 
-plt.subplot(2,2,2)
-plt.imshow(sobelx,cmap='gray')
-plt.title('sobelx')
-plt.xticks([]), plt.yticks([])
+plt.subplot(1,2,2)
+plt.imshow(image)
+plt.title('gray')
+plt.axis('off')
 
-plt.subplot(2,2,3)
-plt.imshow(sobely,cmap='gray')
-plt.title('sobely')
-plt.xticks([]), plt.yticks([])
 
-plt.subplot(2,2,4)
-plt.imshow(sobelxy,cmap='gray')
-plt.title('sobelxy')
-plt.xticks([]), plt.yticks([])
-plt.show()
-# cv2.waitKey(0)
-laplacian = cv2.Laplacian(gray,cv2.CV_64F)
-plt.imshow(laplacian,cmap='gray')
-plt.title('laplacian')
-plt.show()
+# Find the edges in the image using canny detector and display
 
-canny_edges = cv2.Canny(gray, 120, 150)
-plt.imshow(canny_edges,cmap='gray')
-plt.title('canny_edges')
-plt.show()
+edges = cv2.Canny(image, 120, 150)
+plt.imshow(edges)
+plt.title('EDGES')
+plt.axis('off')
+
+# Detect points that form a line using HoughLinesP
+
+lines=cv2.HoughLinesP(edges,1,np.pi/180,threshold=80,minLineLength=50,maxLineGap=250)
+
+
+# Draw lines on the image
+
+for line in lines:
+    x1,y1,x2,y2=line[0]
+    cv2.line(image,(x1,y1),(x2,y2),(0,0,205),2)
+
+# Display the result
+
+plt.imshow(image)
+plt.title('HOUGH')
+plt.axis('off')
+
+
 ```
-## Output:
-### SOBEL EDGE DETECTOR
-![O1](https://user-images.githubusercontent.com/75235747/168643877-2d3b2e4c-c586-4f92-b313-5926f3aa4d73.JPG)
+## Output
 
-### LAPLACIAN EDGE DETECTOR
-![O2](https://user-images.githubusercontent.com/75235747/168643968-b99b4833-5ebb-45b2-a253-553ba2a7982d.JPG)
+### Input image and grayscale image
+![o1](https://user-images.githubusercontent.com/75235747/169493606-8f0fb1af-3dd1-49e0-8a53-79db158ad4cb.JPG)
 
-### CANNY EDGE DETECTOR
-![O3](https://user-images.githubusercontent.com/75235747/168643999-090609d7-2a33-4e5d-9e95-fd9b1c4b9a52.JPG)
+### Canny Edge detector output
+![o2](https://user-images.githubusercontent.com/75235747/169493667-1cfc01e1-3a38-4c57-b367-53bd2b2a9648.JPG)
+
+### Display the result of Hough transform
+![o3](https://user-images.githubusercontent.com/75235747/169493832-841d647b-7f58-449b-ad2f-652e99c5b662.JPG)
 
 ## Result:
-Thus the edges are detected using Sobel, Laplacian, and Canny edge detectors.
+Thus the program is written with python and OpenCV to detect lines using Hough transform. 
